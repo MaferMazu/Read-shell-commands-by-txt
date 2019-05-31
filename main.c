@@ -1,5 +1,25 @@
 #include <stdio.h>
 
+main()
+{
+  char buf[1024];
+  char *args[64];
+
+  for (;;) {
+  /*Lectura de comandos*/
+  printf("Comand: ");
+  if (gets(buf) == NULL){
+    printf("/n");
+    exit(0);
+  }
+  /* Pico el string en argumentos */
+  parse(buf,args);
+
+  /*Ejecuto el comando*/
+  execute(args);
+  }
+}
+
 parse (buf,args)
 char *buf;
 char **args;
@@ -7,16 +27,16 @@ char **args;
 	while (*buf != NULL){
 		/* frajas en blanco
 		* usa nulo para que el argumento anterior se termine
-		*/	
+		*/
 
-		while ((*buf == ''))  ||  ((*buf == '\t' ))	
+		while ((*buf == ' ')  ||  (*buf == '\t' ))
 			*buf++ = NULL;
 
 		/* salva los argumentos */
 		*args++ = buf;
 
-		/* omite los argumentos */ 
-		while ((*buf != NULL) && (*buf != '' ) && (*buf != '\t'))
+		/* omite los argumentos */
+		while ((*buf != NULL) && (*buf != ' ' ) && (*buf != '\t'))
 			buf++;
 	}
 
@@ -32,12 +52,12 @@ char **args;
 {
 	int pid, status;
 
-	/* 
+	/*
 	obtiene el proceso hijo
 	*/
 
 	if ((pid = fork()) < 0){
-		perror(”fork”);
+		perror("fork");
 		exit(1);
 	}
 
@@ -52,29 +72,7 @@ char **args;
 
 	/*
 	el padre ejecuta la espera
-	*/ 
+	*/
 	while (wait(&status) != pid)
 		/* vacio*/;
 }
-
-
-main()
-{
-  char buf[1024];
-  char *args[64];
-
-  for (;;) {
-  /*Lectura de comandos*/
-  printf(”>”);
-  if (gets(buf) == NULL){
-    printf(” /n”);
-    exit(0);
-  }
-  /* Pico el string en argumentos */
-  parse(buf,args);
-
-  /*Ejecuto el comando*/
-  execute(args);
-  }
-}
-
