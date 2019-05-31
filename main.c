@@ -37,7 +37,7 @@ char **args;
 	*/
 
 	if ((pid = fork()) < 0){
-		perror(“fork”);
+		perror(”fork”);
 		exit(1);
 	}
 
@@ -65,9 +65,9 @@ main()
 
   for (;;) {
   /*Lectura de comandos*/
-  printf(“>”);
+  printf(”>”);
   if (gets(buf) == NULL){
-    printf(“ /n”);
+    printf(” /n”);
     exit(0);
   }
   /* Pico el string en argumentos */
