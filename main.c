@@ -58,7 +58,6 @@ char **args;
 }
 
 
-
 main()
 {
   char buf[1024];
@@ -68,6 +67,14 @@ main()
   /*Lectura de comandos*/
   printf(“>”);
   if (gets(buf) == NULL){
-    printf(“/n”)}
+    printf(“ /n”);
+    exit(0);
+  }
+  /* Pico el string en argumentos */
+  parse(buf,args);
+
+  /*Ejecuto el comando*/
+  execute(args);
   }
 }
+
